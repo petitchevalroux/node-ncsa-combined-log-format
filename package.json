@@ -1,26 +1,31 @@
 {
-    "name": "ncsa-combined-log-format",
-    "version": "0.0.1",
-    "description": "A transform stream, converting combined common log format to JSON",
-    "scripts": {
-        "test": "make tests"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://github.com/petitchevalroux/node-ncsa-combined-log-format.git"
-    },
-    "author": "Patrick Poulain",
-    "license": "GPL-3.0",
-    "bugs": {
-        "url": "https://github.com/petitchevalroux/node-ncsa-combined-log-format/issues"
-    },
-    "homepage": "https://github.com/petitchevalroux/node-ncsa-combined-log-format#readme",
-    "devDependencies": {
-        "eslint": "^3.3.1",
-        "eslint-plugin-promise": "^2.0.1",
-        "istanbul": "^0.4.4",
-        "js-beautify": "^1.6.3",
-        "mocha": "^3.0.2",
-        "sinon": "^1.17.5"
-    }
+  "name": "ncsa-combined-log-format",
+  "version": "0.0.1",
+  "description": "A transform stream, converting combined common log format to JSON",
+  "main": "./src/stream.js",
+  "scripts": {
+    "test": "make tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/petitchevalroux/node-ncsa-combined-log-format.git"
+  },
+  "author": "Patrick Poulain",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/petitchevalroux/node-ncsa-combined-log-format/issues"
+  },
+  "homepage": "https://github.com/petitchevalroux/node-ncsa-combined-log-format#readme",
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "eslint": "^3.3.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "istanbul": "^0.4.4",
+    "js-beautify": "^1.6.3",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.5"
+  },
+  "dependencies": {
+    "alpine": "^0.2.1"
+  }
 }
