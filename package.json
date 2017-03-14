@@ -1,6 +1,6 @@
 {
   "name": "ncsa-combined-log-format",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A transform stream, converting combined common log format to JSON",
   "main": "./src/stream.js",
   "scripts": {
