@@ -4,14 +4,11 @@ var Clf = require(path.join(".."));
 var Promise = require("bluebird");
 var assert = require("assert");
 describe("Transform stream", function() {
-    var transform;
-    beforeEach(function() {
-        transform = new Clf();
-    });
 
-    function checkResult(entry, result) {
+    function checkResult(entry, result, clf) {
+        clf = clf || new Clf();
         return new Promise(function(resolve, reject) {
-            transform.on("readable", function() {
+            clf.on("readable", function() {
                 try {
                     assert.deepEqual(result, this.read());
                     resolve(result);
@@ -19,9 +16,10 @@ describe("Transform stream", function() {
                     reject(e);
                 }
             });
-            transform.write(entry);
+            clf.write(entry);
         });
     }
+
     it("Parse a combined log line", function() {
         var p = checkResult(
             "127.0.0.1 logname user [Wed, 11 Jun 2014 15:51:48 GMT] \"GET /package.json HTTP/1.1\" 200 733 \"http://localhost:8000/\" \"userAgent\"", {
@@ -65,11 +63,35 @@ describe("Transform stream", function() {
     });
 
     it("Emit error where parsing fail", function(done) {
+        var transform = new Clf();
         transform.on("error", function(e) {
             assert(e instanceof Error);
             done();
         });
         transform.write("coucou");
+    });
+
+    it("Parse date formated as 14/Mar/2017:06:42:25 +0100", function() {
+        var p = checkResult(
+            "127.0.0.1 - - [14/Mar/2017:06:42:25 +0100] \"GET /package.json HTTP/1.1\" 200 733 \"-\" \"-\"", {
+                "host": "127.0.0.1",
+                "logName": "",
+                "referer": "",
+                "date": new Date(
+                    "2017-03-14T05:42:25.000Z"),
+                "request": {
+                    "method": "GET",
+                    "uri": "/package.json",
+                    "httpVersion": "1.1"
+                },
+                "size": 733,
+                "statusCode": 200,
+                "user": "",
+                "userAgent": ""
+            }, new Clf({
+                "dateFormat": "DD/MMM/YYYY:HH:mm:ss ZZ"
+            }));
+        return p;
     });
 
 });

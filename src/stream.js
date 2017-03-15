@@ -3,6 +3,7 @@ var Alpine = new require("alpine");
 var stream = require("stream");
 var Transform = stream.Transform;
 var util = require("util");
+var moment = require("moment");
 
 module.exports = Clf;
 
@@ -10,6 +11,10 @@ function Clf(options) {
     options = options || {};
     options.readableObjectMode = true;
     this.alpine = new Alpine(Alpine.LOGFORMATS.COMBINED);
+    if (options.dateFormat) {
+        this.dateFormat = options.dateFormat;
+        delete options.dateFormat;
+    }
     Transform.call(this, options);
 }
 util.inherits(Clf, Transform);
@@ -26,7 +31,7 @@ Clf.prototype._transform = function(chunk, enc, done) {
                     host: data.remoteHost,
                     logName: data.logname,
                     user: data.remoteUser,
-                    date: new Date(data.time),
+                    date: self.formatDate(data.time),
                     request: request,
                     statusCode: Number(data.status),
                     size: Number(data.sizeCLF),
@@ -47,6 +52,11 @@ Clf.prototype._transform = function(chunk, enc, done) {
     }
 
     done();
+};
+
+Clf.prototype.formatDate = function(date) {
+    return this.dateFormat ? moment(date, this.dateFormat)
+        .toDate() : new Date(date);
 };
 
 Clf.prototype.parseRequest = function(request) {
