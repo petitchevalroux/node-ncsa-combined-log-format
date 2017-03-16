@@ -8,15 +8,13 @@ describe("Transform stream", function() {
     function checkResult(entry, result, clf) {
         clf = clf || new Clf();
         return new Promise(function(resolve, reject) {
-            clf.on("readable", function() {
-                try {
-                    assert.deepEqual(result, this.read());
-                    resolve(result);
-                } catch (e) {
-                    reject(e);
-                }
-            });
-            clf.write(entry);
+            clf.write(entry + "\n");
+            try {
+                assert.deepEqual(result, clf.read());
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
@@ -68,7 +66,7 @@ describe("Transform stream", function() {
             assert(e instanceof Error);
             done();
         });
-        transform.write("coucou");
+        transform.write("coucou\n");
     });
 
     it("Parse date formated as 14/Mar/2017:06:42:25 +0100", function() {
