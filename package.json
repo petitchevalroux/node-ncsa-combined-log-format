@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "alpine": "^0.2.1",
+    "byline": "^5.0.0",
     "moment": "^2.17.1"
   }
 }
