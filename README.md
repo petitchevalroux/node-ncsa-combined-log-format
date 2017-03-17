@@ -20,7 +20,7 @@ clf.on("error",function(e){
 	console.log(e);
 });
 input.pipe(new Clf()).pipe(output);
-input.push("127.0.0.1 logname user [Wed, 11 Jun 2014 15:51:48 GMT] \"GET /package.json HTTP/1.1\" 200 733 \"http://localhost:8000/\" \"userAgent\"");
+input.push("127.0.0.1 logname user [Wed, 11 Jun 2014 15:51:48 GMT] \"GET /package.json HTTP/1.1\" 200 733 \"http://localhost:8000/\" \"userAgent\"\n");
 input.push(null);
 ```
 Will output:
